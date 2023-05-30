@@ -1,0 +1,191 @@
+/*
+Theme Name: Local 1857
+Theme URI: https://twodogsdev.com
+Author: Two Dogs Web Development
+Author URI: https://twodogsdev.com
+Description: A KCLS Voice Theme from Two Dogs Web Development
+Version: 1.2.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: local1857
+*/
+
+.local1857-section-content {
+  margin: 1rem 4rem;
+}
+
+.local1857-section-heading {
+  font-size: 3rem;
+  padding-right: 1.25rem;
+  border-bottom: var(--wp--preset--color--kcls-voice-green) 2px solid;
+}
+
+.local1857-heading-button > .wp-block-button {
+  margin-left: 1rem;
+}
+
+.local1857-hero-left {
+  max-width: 800px;
+}
+
+.local1857-hero-left > p {
+  font-size: 1.25rem;
+}
+
+.local1857-action-bar {
+  padding: 5rem;
+}
+
+.local1857-menu-card {
+  max-width: 300px;
+  padding: 1.2rem;
+  justify-content: space-between;
+  min-height: 350px;
+  text-align: center;
+}
+
+.local1857-menu-card > p {
+  max-width: 80%;
+  line-height: 1.1rem;
+  font-size: 0.8rem;
+}
+
+.local1857-menu-container {
+  justify-content: space-around !important;
+}
+
+.local1857-blog-content {
+  max-width: 60vw;
+  margin: auto;
+}
+
+.local1857-blog-post-details {
+  width: 100%;
+  background-color: var(--wp--preset--color--kcls-voice-blue);
+  color: var(--wp--preset--color--kcls-voice-white);
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+}
+
+.local1857-blog-post-details p, .local1857-blog-post-details a {
+  color: var(--wp--preset--color--kcls-voice-white);
+}
+
+.local1857-post-content{
+  padding: 2rem 0;
+
+}
+
+.local1857-recent-blogs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.local1857-recent-blogs > li {
+  /* background-color: var(--wp--preset--color--kcls-voice-blue); */
+  border: 2px solid var(--wp--preset--color--kcls-voice-blue);
+  max-width: 300px;
+  width: 100%;
+  padding: 1.2rem;
+  margin: 1rem;
+  text-align: center;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--wp--preset--color--kcls-voice-black);
+}
+
+.local1857-recent-blogs > li > .wp-block-latest-posts__featured-image{
+  padding-bottom: 1rem;
+}
+
+.local1857-recent-blogs > li > a {
+  /* color: var(--wp--preset--color--kcls-voice-white); */
+  color: var(--wp--preset--color--kcls-voice-black);
+  text-decoration: none;
+}
+
+.local1857-blog-right-sidebar {
+  padding: 0 1rem;
+  border-left: 1px solid var(--wp--preset--color--kcls-voice-green);
+}
+
+h2.local1857-post-title{
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+/* ******************** */
+/* *   1857 Header    * */
+/* ******************** */
+.local1857-header{
+  position:absolute;
+  top:30px;
+  z-index: 2;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.local1857-header a span {
+  padding: 0 1rem;
+}
+
+.wp-block-navigation__container > * {
+  color: var(--wp--preset--color--kcls-voice-white);
+  padding: 0 1rem;
+}
+
+.wp-block-navigation-submenu .wp-block-navigation__submenu-container a {
+  background-color: var(--wp--preset--color--kcls-voice-white);
+  padding: 0.5rem 1rem;
+}
+
+.wp-block-navigation-submenu .wp-block-navigation__submenu-container a > span {
+  color: var(--wp--preset--color--kcls-voice-black);
+}
+
+.wp-block-navigation-submenu .wp-block-navigation__submenu-container a:hover {
+  background-color: var(--wp--preset--color--kcls-voice-blue);
+}
+
+.wp-block-navigation-submenu .wp-block-navigation__submenu-container a:hover > span {
+color: var(--wp--preset--color--kcls-voice-white);
+}
+
+/* ************* */
+/* * 404 Page  * */
+/* ************* */
+
+.admin-bar .local1857-404-cover{
+  /* Reduces height when admin-bar is present */
+  height: calc(100vh - 32px);
+}
+
+.local1857-404-cover .local1857-footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* ************* */
+/* *  Footer   * */
+/* ************* */
+
+.local1857-footer{
+  padding: 1rem;
+}
+
+/* ************ */
+/* *  Pages   * */
+/* ************ */
+
+h2.local1857-page-title{
+  font-size: 4rem;
+  padding: 1rem 0;
+  margin-top: 1rem;
+}

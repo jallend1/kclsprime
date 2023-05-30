@@ -1,0 +1,27 @@
+h2{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.local1857-header{
+    background-color: black;
+    opacity: 0.5;
+    padding: 0 1rem;
+}
+
+.local1857-header nav {
+    color: var(--wp--preset--color--kcls-voice-white);
+}
+
+.local1857-section-content{
+    padding: 2rem;
+}
+
+.local1857-menu-card{
+    max-width: 300px;
+    text-align: center;
+}
+
+.local1857-section-content > .wp-block-local1857-local1857events{
+    margin: auto;
+}

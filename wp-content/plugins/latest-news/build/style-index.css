@@ -1,0 +1,37 @@
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+.local1857-news-image img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+
+.local1857-recent-posts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.local1857-news-card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 1rem;
+}
+.local1857-news-card p {
+  margin: 0.75rem 0;
+}
+.local1857-news-card h3 {
+  color: var(--wp--preset--color--kcls-voice-black);
+  font-size: 1.75rem;
+  margin: 0;
+}
+.local1857-news-card a {
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

@@ -1,0 +1,6 @@
+name: kclsprime
+recipe: pantheon
+config:
+  framework: wordpress
+  site: kclsprime
+  id: 99607133-d80d-4cc4-b056-ad314525ae66

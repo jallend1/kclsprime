@@ -24,6 +24,7 @@
 .local1857-news-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 300px;
   margin: 1rem;
 }

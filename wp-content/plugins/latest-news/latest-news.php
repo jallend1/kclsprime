@@ -38,30 +38,32 @@ function local1857_latest_news_block_renderer($attr)
             <?php if ($the_query->have_posts()) ?>
             <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
                 <div class="local1857-news-card">
-                    <div class="local1857-news-image">
-                        <?php if (has_post_thumbnail()) {
-                            the_post_thumbnail('large');
-                        }
-                        // If no featured image, display the first image from the post or default logo
-                        else {
-                            $local1857_post_img = local1857_get_post_image();
-                            echo '<img src="' . $local1857_post_img . '" alt="' . get_the_title() . '">';
-                        } ?>
-                    </div>
-                    <div class="local1857-news-content">
+                    <header>
+                        <div class="local1857-news-image">
+                            <?php if (has_post_thumbnail()) {
+                                the_post_thumbnail('large');
+                            }
+                            // If no featured image, display the first image from the post or default logo
+                            else {
+                                $local1857_post_img = local1857_get_post_image();
+                                echo '<img src="' . $local1857_post_img . '" alt="' . get_the_title() . '">';
+                            } ?>
+                        </div>
                         <a href="<?php the_permalink(); ?>">
                             <h3><?php the_title(); ?></h3>
                         </a>
+                    </header>
+                    <main class="local1857-news-content">
                         <p class="local1857-recent-post-time"><?php the_date('F j, Y'); ?></p>
                         <div class="local1857-recent-post-expanded">
                             <p>
                                 <?php echo get_first_25_words(); ?>
                             </p>
                         </div>
-                        <div class="wp-block-button local1857-read-more-section">
-                            <a class="wp-block-button__link w-element-button local1857-read-more" href="<?php the_permalink(); ?>">Read More</a>
-                        </div>
-                    </div>
+                    </main>
+                    <footer class="wp-block-button local1857-read-more-section">
+                        <a class="wp-block-button__link w-element-button local1857-read-more" href="<?php the_permalink(); ?>">Read More</a>
+                    </footer>
                 </div>
             <?php endwhile; ?>
         </div>

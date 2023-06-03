@@ -57,7 +57,7 @@ function local1857_latest_news_block_renderer($attr)
                         <p class="local1857-recent-post-time"><?php the_date('F j, Y'); ?></p>
                         <div class="local1857-recent-post-expanded">
                             <p>
-                                <?php echo get_first_25_words(); ?>
+                                <?php echo get_first_25_words(); ?>...
                             </p>
                         </div>
                     </main>

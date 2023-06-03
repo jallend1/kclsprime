@@ -26,7 +26,7 @@ function local1857_latest_news_block_renderer($attr)
 {
     $args = array(
         'post_type' => 'post',
-        'posts_per_page' => 5,
+        'posts_per_page' => 4,
         'orderby' => 'date',
         'order' => 'DESC'
     );
@@ -53,11 +53,13 @@ function local1857_latest_news_block_renderer($attr)
                             <h3><?php the_title(); ?></h3>
                         </a>
                         <p class="local1857-recent-post-time"><?php the_date('F j, Y'); ?></p>
-                        <div class="local1857-recent-post-expanded <?php if ($the_query->current_post === 0) echo 'local1857-blurb-and-image'; ?>">
+                        <div class="local1857-recent-post-expanded">
                             <p>
                                 <?php echo get_first_25_words(); ?>
                             </p>
-                            <a href="<?php the_permalink(); ?>">Read More</a>
+                        </div>
+                        <div class="wp-block-button local1857-read-more-section">
+                            <a class="wp-block-button__link w-element-button local1857-read-more" href="<?php the_permalink(); ?>">Read More</a>
                         </div>
                     </div>
                 </div>

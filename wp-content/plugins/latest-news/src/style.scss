@@ -1,3 +1,7 @@
+.local1857-latest-news-block {
+	width: 100%;
+}
+
 .local1857-news-image {
 	img {
 		object-fit: cover;
@@ -6,11 +10,11 @@
 	}
 }
 .local1857-recent-posts {
+	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
 	margin: 0 auto;
-	// max-width: 1200px;
 	padding: 0 20px;
 }
 
@@ -26,11 +30,30 @@
 
 	h3 {
 		color: var(--wp--preset--color--kcls-voice-black);
-		font-size: 1.75rem;
+		font-size: 1.5rem;
 		margin: 0;
+		text-align: center;
 	}
 
 	a {
 		text-decoration: none;
+	}
+
+	.local1857-recent-post-time {
+		font-size: 0.75rem;
+	}
+
+	.local1857-read-more-section {
+		display: flex;
+		justify-content: center;
+	}
+
+	.local1857-read-more {
+		font-size: 0.75rem;
+		background-color: var(--wp--preset--color--kcls-voice-white);
+		color: var(--wp--preset--color--kcls-voice-green);
+		border: solid 1px var(--wp--preset--color--kcls-voice-green);
+		margin: auto;
+		text-align: center;
 	}
 }

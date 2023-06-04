@@ -13,9 +13,6 @@ function local_1857_editor_styles()
 // If the block being rendered is core/latest-posts, if the post does not have a featured image, then make local1857logo.png the default
 function local_1857_default_post_image($image, $post, $args)
 {
-    echo '<pre>';
-    print_r($image);
-    echo '</pre>';
     if ($image) {
         return $image;
     }

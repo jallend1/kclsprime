@@ -90,6 +90,7 @@ Text Domain: local1857
   font-size: 0.75rem;
   max-width: 300px;
   color: var(--wp--preset--color--kcls-voice-black);
+  padding: 0.5rem;
 }
 
 .local1857-recent-blogs > li > .wp-block-latest-posts__post-title {

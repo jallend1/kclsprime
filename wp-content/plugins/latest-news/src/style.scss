@@ -70,5 +70,11 @@
 		border: solid 1px var(--wp--preset--color--kcls-voice-green);
 		margin: auto;
 		text-align: center;
+		transition: 0.5s;
+	}
+
+	.local1857-read-more:hover {
+		background-color: var(--wp--preset--color--kcls-voice-green);
+		color: var(--wp--preset--color--kcls-voice-white);
 	}
 }

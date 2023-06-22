@@ -5,12 +5,19 @@
  * Categories: text
  */
 ?>
+
 <!-- wp:group {"className":"local1857-section-content","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
 <div class="wp-block-group local1857-section-content"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group"><!-- wp:heading {"className":"local1857-section-heading"} -->
-<h2 class="wp-block-heading local1857-section-heading">Know Your Contract</h2>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
+    <div class="wp-block-group"><!-- wp:heading {"className":"local1857-section-heading"} -->
+    <h2 class="wp-block-heading local1857-section-heading">Know Your Contract</h2>
+    <!-- /wp:heading -->
+    
+    <!-- wp:buttons -->
+    <div class="wp-block-buttons"><!-- wp:button -->
+    <div class="wp-block-button"><a href="/union-contracts" class="wp-block-button__link wp-element-button">See All</a></div>
+    <!-- /wp:button --></div>
+    <!-- /wp:buttons --></div>
+    <!-- /wp:group -->
 
 <!-- wp:group {"className":"local1857-menu-container","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"center","orientation":"horizontal"}} -->
 <div class="wp-block-group local1857-menu-container"><!-- wp:group {"className":"local1857-menu-card","layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->

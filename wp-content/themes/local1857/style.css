@@ -20,8 +20,8 @@ Text Domain: local1857
   border-bottom: var(--wp--preset--color--kcls-voice-green) 2px solid;
 }
 
-.local1857-heading-button > .wp-block-button {
-  margin-left: 1rem;
+.local1857-section-heading + .wp-block-buttons {
+  min-width: 150px;
 }
 
 .local1857-hero-left {

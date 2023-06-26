@@ -15,7 +15,7 @@
 
         <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
         <div class="wp-block-buttons"><!-- wp:button {"width":100} -->
-            <div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link wp-element-button">CONTACT</a></div>
+            <div class="wp-block-button has-custom-width wp-block-button__width-100"><a href="/contact" class="wp-block-button__link wp-element-button">CONTACT</a></div>
             <!-- /wp:button -->
         </div>
         <!-- /wp:buttons -->

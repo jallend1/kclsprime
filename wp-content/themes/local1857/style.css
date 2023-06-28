@@ -82,6 +82,31 @@ Text Domain: local1857
   padding: 2rem 0;
 }
 
+/* **************** */
+/* *  Posts Page  * */
+/* **************** */
+
+.local1857-posts-page-template > li{
+  padding: 1rem;
+}
+
+.local1857-posts-page-title{
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.local1857-posts-page-title a{
+  text-decoration: none;
+  color: black;
+}
+
+.local1857-posts-page-date{
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
 /* ******************* */
 /* *   Blog Sidebar  * */
 /* ******************* */

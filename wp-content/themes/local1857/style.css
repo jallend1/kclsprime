@@ -63,6 +63,8 @@ Text Domain: local1857
   margin: auto;
 }
 
+
+
 .local1857-blog-post-details {
   width: 100%;
   background-color: var(--wp--preset--color--kcls-voice-blue);
@@ -206,6 +208,11 @@ h2.local1857-post-title {
 /* ************ */
 /* *  Pages   * */
 /* ************ */
+
+.page .local1857-blog-content {
+  border-left: 1px solid var(--wp--preset--color--kcls-voice-green);
+  border-right: 1px solid var(--wp--preset--color--kcls-voice-green);
+}
 
 h2.local1857-page-title {
   font-size: 4rem;

@@ -12,7 +12,7 @@
     <div class="wp-block-cover__inner-container">
         <!-- If the URL indicates search results, display the search terms -->
         <?php if (strpos($_SERVER['REQUEST_URI'], '/?s=') !== false) : ?>
-            <!-- wp:query-title {"type":"search","textAlign":"center","level":1,"className":"local1857-search-header"} /-->
+            <!-- wp:query-title {"type":"search","textAlign":"center","level":2,"className":"local1857-page-title"} /-->
         <!-- If it's just a regular page, display the title -->
         <?php else : ?>
             <!-- wp:post-title {"className":"local1857-page-title"} /-->

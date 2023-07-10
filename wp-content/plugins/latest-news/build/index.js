@@ -47,7 +47,7 @@ function Edit() {
       alt: "Local 1857 Logo"
     }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
       className: "local1857-recent-news-editor-heading"
-    }, post.title.rendered), index === 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    }, post.title.rendered), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       className: "local1857-recent-news-editor-excerpt",
       dangerouslySetInnerHTML: {
         __html: (0,dompurify__WEBPACK_IMPORTED_MODULE_5__.sanitize)(post.excerpt.rendered)

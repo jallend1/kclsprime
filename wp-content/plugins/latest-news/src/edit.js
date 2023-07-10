@@ -45,17 +45,15 @@ export default function Edit() {
 									<h3 className="local1857-recent-news-editor-heading">
 										{post.title.rendered}
 									</h3>
-									{index === 0 && (
 										<p
 											className="local1857-recent-news-editor-excerpt"
 											dangerouslySetInnerHTML={{
 												__html: sanitize(post.excerpt.rendered),
 											}}
 										></p>
-									)}
 								</div>
 							);
-					  })
+					})
 					: null}
 			</div>
 			<div className="local1857-editor-news-overlay">

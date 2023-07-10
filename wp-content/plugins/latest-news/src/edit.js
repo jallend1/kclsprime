@@ -16,7 +16,12 @@ export default function Edit() {
 		});
 
 		if (!page.hasResolved) {
-			return <Spinner />;
+			return (
+				<div>
+					<h2>Retrieving Image...</h2>
+					<Spinner />
+				</div>
+			);
 		}
 		return <img src={page.records[0].source_url} alt="Featured Image" />;
 	};

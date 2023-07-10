@@ -43,7 +43,7 @@ function Edit() {
       include: [attachmentID]
     });
     if (!page.hasResolved) {
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null);
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Retrieving Image..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null));
     }
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       src: page.records[0].source_url,

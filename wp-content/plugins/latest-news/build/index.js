@@ -62,14 +62,14 @@ function Edit() {
   }, !posts.hasResolved && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RetrievingPosts, null), posts.records && posts.records.length === 0 && "No Posts", posts.hasResolved && posts.records.length > 0 ? posts.records.slice(0, 5).map((post, index) => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       class: "local1857-voice-editor-news"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("header", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "local1857-news-image"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "local1857-news-editor-image"
     }, post.featured_media !== 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(FeaturedImage, {
       attachmentID: post.featured_media
     }), post.featured_media === 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       src: _local1857logo_png__WEBPACK_IMPORTED_MODULE_6__,
       alt: "Local 1857 Logo"
-    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
       className: "local1857-recent-news-editor-heading"
     }, post.title.rendered), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       className: "local1857-recent-news-editor-excerpt",

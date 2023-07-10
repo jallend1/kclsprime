@@ -1,8 +1,21 @@
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
   \****************************************************************************************************************************************************************************************************************************************/
-.local1857-recent-news-editor-heading {
-  color: black !important;
+.local1857-voice-editor-news {
+  padding: 1rem;
+}
+.local1857-voice-editor-news .local1857-recent-news-editor-heading {
+  font-size: 0.75rem;
+  color: var(--wp--preset--color--kcls-voice-black);
+}
+.local1857-voice-editor-news img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: 100%;
+  max-height: 150px;
+}
+.local1857-voice-editor-news p {
+  font-size: 0.5rem;
 }
 
 .local1857-editor-news-overlay {

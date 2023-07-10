@@ -3,8 +3,7 @@ import { useEntityRecords } from "@wordpress/core-data";
 import { Spinner } from "@wordpress/components";
 import "./editor.scss";
 import { sanitize } from "dompurify";
-
-
+import local1857Logo from "../local1857logo.png";
 
 export default function Edit() {
 
@@ -12,31 +11,44 @@ export default function Edit() {
 		per_page: 5,
 	});
 
+	const FeaturedImage = ({ attachmentID }) => {
+		const page = useEntityRecords("postType", "attachment", {
+			include: [attachmentID],
+		});
+
+		if(!page.hasResolved) {
+			return <Spinner />
+		}
+		return <img src={page.records[0].source_url} alt="Featured Image" />;
+	};
+
+	const RetrievingPosts = () => {
+		return (
+			<div className="local1857-loading-posts">
+				<h2>Retrieving Posts...</h2>
+				<Spinner />
+			</div>
+		)
+	}
 
 	return (
 		<div className="local1857-recent-news-block">
 			<div className="local1857-voice-editor-news-container">
-				{!posts.hasResolved && <Spinner />}
+				{!posts.hasResolved && <RetrievingPosts />}
 				{posts.records && posts.records.length === 0 && "No Posts"}
 				{posts.hasResolved && posts.records.length > 0
 					? posts.records.slice(0, 5).map((post, index) => {							
 							return (
 								<div class="local1857-voice-editor-news">
 									<header>
-										<div className="local1857-news-image">
-										
-											{/* {post.featured_media !== 0 && (
-												<img
-													src={post._embedded["wp:featuredmedia"][0].source_url}
-													alt={post._embedded["wp:featuredmedia"][0].alt_text}
-												/>
-											)} */}
-
-											
+										<div className="local1857-news-image">										
+											{post.featured_media !== 0 && (
+												<FeaturedImage attachmentID={post.featured_media} />
+											)}
 											{/* If post does not have featured_media, display local1857logo.png from the current folder*/}
 											{post.featured_media === 0 && (
 												<img
-													src={require("../local1857logo.png")}
+													src={local1857Logo}
 													alt="Local 1857 Logo"
 												/>
 											)}

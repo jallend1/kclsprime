@@ -23,6 +23,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 /* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
 /* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _local1857logo_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../local1857logo.png */ "./local1857logo.png");
+
 
 
 
@@ -33,17 +35,39 @@ function Edit() {
   const posts = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "post", {
     per_page: 5
   });
+  const FeaturedImage = _ref => {
+    let {
+      attachmentID
+    } = _ref;
+    const page = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)("postType", "attachment", {
+      include: [attachmentID]
+    });
+    if (!page.hasResolved) {
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null);
+    }
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      src: page.records[0].source_url,
+      alt: "Featured Image"
+    });
+  };
+  const RetrievingPosts = () => {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "local1857-loading-posts"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Retrieving Posts..."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null));
+  };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "local1857-recent-news-block"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "local1857-voice-editor-news-container"
-  }, !posts.hasResolved && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null), posts.records && posts.records.length === 0 && "No Posts", posts.hasResolved && posts.records.length > 0 ? posts.records.slice(0, 5).map((post, index) => {
+  }, !posts.hasResolved && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RetrievingPosts, null), posts.records && posts.records.length === 0 && "No Posts", posts.hasResolved && posts.records.length > 0 ? posts.records.slice(0, 5).map((post, index) => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       class: "local1857-voice-editor-news"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("header", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "local1857-news-image"
-    }, post.featured_media === 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-      src: __webpack_require__(/*! ../local1857logo.png */ "./local1857logo.png"),
+    }, post.featured_media !== 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(FeaturedImage, {
+      attachmentID: post.featured_media
+    }), post.featured_media === 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      src: _local1857logo_png__WEBPACK_IMPORTED_MODULE_6__,
       alt: "Local 1857 Logo"
     }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
       className: "local1857-recent-news-editor-heading"

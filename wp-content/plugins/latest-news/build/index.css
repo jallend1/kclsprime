@@ -21,4 +21,15 @@
   display: flex;
 }
 
+.local1857-loading-posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.local1857-loading-posts h2 {
+  text-align: center;
+}
+
 /*# sourceMappingURL=index.css.map*/

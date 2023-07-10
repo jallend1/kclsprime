@@ -16,5 +16,16 @@
 
 .local1857-voice-editor-news-container{
 	display:flex;
-	
+}
+
+.local1857-loading-posts{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+
+	h2{
+		text-align: center;
+	}
 }

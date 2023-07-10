@@ -23,4 +23,6 @@
             <!-- /wp:button -->
         </div>
         <!-- /wp:buttons -->
-        <!-- /wp:cover -->
+    </div>
+</div>
+<!-- /wp:cover -->

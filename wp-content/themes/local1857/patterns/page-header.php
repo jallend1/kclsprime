@@ -12,7 +12,6 @@
     <div class="wp-block-cover__inner-container">
         <?php if (strpos($_SERVER['REQUEST_URI'], '/?s=') !== false) : ?>
             <!-- wp:query-title {"type":"search","textAlign":"center","level":2,"className":"local1857-page-title"} /-->
-            <!-- If it's just a regular page, display the title -->
         <?php else : ?>
             <!-- wp:post-title {"className":"local1857-page-title"} /-->
         <?php endif; ?>

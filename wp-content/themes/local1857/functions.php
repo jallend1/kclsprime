@@ -14,7 +14,7 @@ function local_1857_editor_styles()
 
 add_action('after_setup_theme', 'local_1857_editor_styles');
 
-// If the block being rendered is core/latest-posts, if the post does not have a featured image, then make local1857logo.png the default
+// If the block being rendered is core/latest-posts, add default image if none is set
 function local_1857_default_post_image($image, $post, $args)
 {
     if ($image) {
@@ -25,6 +25,7 @@ function local_1857_default_post_image($image, $post, $args)
 }
 
 add_filter('render_block_core/latest-posts', 'local_1857_default_post_image', 10, 3);
+
 
 function local_1857_excerpt_more($more)
 {

@@ -34,16 +34,16 @@ function local_1857_excerpt_more($more)
 add_filter('excerpt_more', 'local_1857_excerpt_more');
 
 // If the post type is post, add a "Read More" link to the end of the excerpt
-function local_1857_excerpt_read_more_link($excerpt)
-{
-    if (get_post_type() === 'post') {
-        $excerpt .= '
-        <div class="local1857-read-more-link-container">
-            <a href="' . get_permalink() . '" class="local1857-read-more-link">Read More »</a>
-        </div>';
-    }
+// function local_1857_excerpt_read_more_link($excerpt)
+// {
+//     if (get_post_type() === 'post') {
+//         $excerpt .= '
+//         <div class="local1857-read-more-link-container">
+//             <a href="' . get_permalink() . '" class="local1857-read-more-link">Read More »</a>
+//         </div>';
+//     }
 
-    return $excerpt;
-}
+//     return $excerpt;
+// }
 
-add_filter('get_the_excerpt', 'local_1857_excerpt_read_more_link');
+// add_filter('get_the_excerpt', 'local_1857_excerpt_read_more_link');

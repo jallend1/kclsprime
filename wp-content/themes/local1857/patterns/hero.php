@@ -6,14 +6,10 @@
  */
 ?>
 <!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri('assets/images/snoqualmie.jpg')); ?>","id":12,"dimRatio":80,"overlayColor":"kcls-voice-black","minHeight":100,"minHeightUnit":"vh","className":"local1857-hero"} -->
-<div class="wp-block-cover local1857-hero" style="min-height:100vh"><span aria-hidden="true" class="wp-block-cover__background has-kcls-voice-black-background-color has-background-dim-80 has-background-dim"></span><img class="wp-block-cover__image-background wp-image-12" alt="" src="<?php echo esc_url( get_theme_file_uri('assets/images/snoqualmie.jpg')); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container">
-<!-- wp:columns {"className":"local1857-hero-columns local1857-section-content",,"layout":{"type":"default"}} -->
-<div class="wp-block-columns local1857-hero-columns local1857-section-content">
-    <!-- wp:column {"width":"50%","className":"local1857-hero-left","layout":{"type":"default"}} -->
-<div class="wp-block-column local1857-hero-left" style="flex-basis:50%">
-    <!-- wp:group {"className":"local1857-hero-headings","layout":{"type":"constrained","justifyContent":"left"}} -->
-<div class="wp-block-group local1857-hero-headings">
-<!-- wp:heading {"level":1,"textColor":"kcls-voice-white"} -->
+<div class="wp-block-cover local1857-hero" style="min-height:100vh"><span aria-hidden="true" class="wp-block-cover__background has-kcls-voice-black-background-color has-background-dim-80 has-background-dim"></span><img class="wp-block-cover__image-background wp-image-12" alt="" src="<?php echo esc_url( get_theme_file_uri('assets/images/snoqualmie.jpg')); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:columns {"className":"local1857-hero-columns local1857-section-content"} -->
+<div class="wp-block-columns local1857-hero-columns local1857-section-content"><!-- wp:column {"width":"50%","className":"local1857-hero-left","layout":{"type":"default"}} -->
+<div class="wp-block-column local1857-hero-left" style="flex-basis:50%"><!-- wp:group {"className":"local1857-hero-headings","layout":{"type":"constrained","justifyContent":"left"}} -->
+<div class="wp-block-group local1857-hero-headings"><!-- wp:heading {"level":1,"textColor":"kcls-voice-white"} -->
 <h1 class="wp-block-heading has-kcls-voice-white-color has-text-color">Local 1857</h1>
 <!-- /wp:heading -->
 

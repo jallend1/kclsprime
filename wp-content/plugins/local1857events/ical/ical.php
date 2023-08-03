@@ -39,6 +39,8 @@ class iCal
             if ($eventTimestamp >= $date) {
                 // Strips out HTML tags from the description before adding it to the array
                 $event->description = strip_tags($event->description);
+                // TODO: Converts the time from GMT to PST, though I'm unclear why this is necessary :(
+                $event->startDateTime = date('Y-m-d H:i:s', strtotime($event->startDateTime) - 25200);
                 $output[] = $event;
             }
         }
@@ -47,10 +49,12 @@ class iCal
         usort($output, function ($a, $b) {
             return strtotime($a->startDateTime) - strtotime($b->startDateTime);
         });
+        
         // Returns only the next 3 events
         if (count($output) > 3) {
             $output = array_slice($output, 0, 3);
         }
+    
         return $output;
     }
 }

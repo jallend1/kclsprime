@@ -114,8 +114,9 @@ Text Domain: local1857
 
 .local1857-recent-blogs {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  max-width: 1000px;
+  max-width: 600px;
 }
 
 .local1857-recent-blogs > li {

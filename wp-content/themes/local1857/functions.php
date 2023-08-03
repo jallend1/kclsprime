@@ -21,7 +21,7 @@ function local_1857_default_post_thumbnail($html, $post_id, $post_thumbnail_id, 
     }
 
     // If on single post, apply a class to the default thumbnail (Currently hidden)
-    if (is_single()) {
+    if (is_single() || is_page()) {
         return '<img src="' . get_template_directory_uri() . '/assets/images/local1857logo.png" alt="Local 1857 Logo" class="local1857-default-thumbnail"/>';
     }
 

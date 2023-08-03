@@ -108,6 +108,11 @@ Text Domain: local1857
   font-weight: bold;
 }
 
+.wp-block-post-featured-image img.local1857-default-thumbnail{
+  /* max-width: 300px; */
+  display: none;
+}
+
 /* ******************* */
 /* *   Blog Sidebar  * */
 /* ******************* */

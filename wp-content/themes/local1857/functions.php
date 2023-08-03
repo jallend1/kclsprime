@@ -27,17 +27,22 @@ add_action('after_setup_theme', 'local_1857_editor_styles');
 // add_filter('render_block_core/latest-posts', 'local_1857_default_post_image', 10, 3);
 
 
-function local_1857_excerpt_more($more)
-{
-    return '...';
-}
+// function local_1857_excerpt_more($more)
+// {
+//     return '...';
+// }
 
-add_filter('excerpt_more', 'local_1857_excerpt_more');
+// add_filter('excerpt_more', 'local_1857_excerpt_more');
 
 function local_1857_default_post_thumbnail($html, $post_id, $post_thumbnail_id, $size, $attr)
 {
     if ($html) {
         return $html;
+    }
+
+    // If on single post, apply a class to the default thumbnail (Currently hidden)
+    if (is_single()) {
+        return '<img src="' . get_template_directory_uri() . '/assets/images/local1857logo.png" alt="Local 1857 Logo" class="local1857-default-thumbnail"/>';
     }
 
     return '<img src="' . get_template_directory_uri() . '/assets/images/local1857logo.png" alt="Local 1857 Logo" />';

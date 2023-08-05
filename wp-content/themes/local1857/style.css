@@ -149,11 +149,8 @@ Text Domain: local1857
   margin-top: 1.2rem;
 }
 
-.local1857-read-more-link-container {
-  margin-top: 1rem;
-}
-
 .local1857-read-more-link {
+  margin-top: 1rem;
   color: var(--wp--preset--color--kcls-voice-green);
   font-weight: bold;
   text-decoration: none;

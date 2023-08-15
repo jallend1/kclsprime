@@ -65,7 +65,7 @@ function Edit() {
     className: "local1857-recent-news-block"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "local1857-voice-editor-news-container"
-  }, !posts.hasResolved && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RetrievingPosts, null), posts.records && posts.records.length === 0 && "No Posts", posts.hasResolved && posts.records.length > 0 ? posts.records.slice(0, 5).map(post => {
+  }, !posts.hasResolved && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RetrievingPosts, null), posts.records && posts.records.length === 0 && "No Posts", posts.hasResolved && posts.records.length > 0 ? posts.records.slice(0, 4).map(post => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       class: "local1857-voice-editor-news"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -82,7 +82,7 @@ function Edit() {
     }));
   }) : null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "local1857-editor-news-overlay"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "This dynamically pulls the five most recent blog posts, and is not editable.")));
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "This dynamically pulls the most recent blog posts, and is not editable.")));
 }
 
 /***/ }),

@@ -46,7 +46,7 @@ export default function Edit() {
 				{!posts.hasResolved && <RetrievingPosts />}
 				{posts.records && posts.records.length === 0 && "No Posts"}
 				{posts.hasResolved && posts.records.length > 0
-					? posts.records.slice(0, 5).map((post) => {
+					? posts.records.slice(0, 4).map((post) => {
 							return (
 								<div class="local1857-voice-editor-news">
 									<div className="local1857-news-editor-image">
@@ -68,7 +68,7 @@ export default function Edit() {
 			</div>
 			<div className="local1857-editor-news-overlay">
 				<h3>
-					This dynamically pulls the five most recent blog posts, and is not
+					This dynamically pulls the most recent blog posts, and is not
 					editable.
 				</h3>
 			</div>

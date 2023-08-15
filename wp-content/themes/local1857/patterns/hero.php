@@ -26,7 +26,7 @@
 <!-- wp:column {"verticalAlignment":"bottom","width":"50%","className":"local1857-hero-right","layout":{"type":"default"}} -->
 <div class="wp-block-column is-vertically-aligned-bottom local1857-hero-right" style="flex-basis:50%"><!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons"><!-- wp:button {"width":50} -->
-<div class="wp-block-button has-custom-width wp-block-button__width-50"><a href="/participation-opportunities" class="wp-block-button__link wp-element-button">Get Involved</a></div>
+<div class="wp-block-button has-custom-width wp-block-button__width-50"><a href="/get-involved" class="wp-block-button__link wp-element-button">Get Involved</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:column --></div>

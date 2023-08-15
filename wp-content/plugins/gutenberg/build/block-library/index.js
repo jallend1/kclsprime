@@ -2400,6 +2400,9 @@ const avatar_metadata = {
       __experimentalDuotone: "img"
     }
   },
+  selectors: {
+    border: ".wp-block-avatar img"
+  },
   editorStyle: "wp-block-avatar-editor",
   style: "wp-block-avatar"
 };
@@ -14430,7 +14433,8 @@ const cover_metadata = {
       heading: true,
       text: true,
       background: false,
-      __experimentalSkipSerialization: ["gradients"]
+      __experimentalSkipSerialization: ["gradients"],
+      enableContrastChecker: false
     },
     typography: {
       fontSize: true,
@@ -18879,7 +18883,8 @@ function GalleryEdit(props) {
     clientId,
     isSelected,
     insertBlocksAfter,
-    isContentLocked
+    isContentLocked,
+    onFocus
   } = props;
   const {
     columns,
@@ -19180,7 +19185,8 @@ function GalleryEdit(props) {
       isAppender: hasImages,
       disableMediaButtons: hasImages && !isSelected || imagesUploading,
       value: hasImageIds ? images : {},
-      autoOpenMediaUpload: !hasImages && isSelected && wasBlockJustInserted
+      autoOpenMediaUpload: !hasImages && isSelected && wasBlockJustInserted,
+      onFocus
     }
   });
   const mediaPlaceholder = (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
@@ -19261,7 +19267,7 @@ function GalleryEdit(props) {
     className: 'gallery-image-sizes'
   }, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.BaseControl.VisualLabel, null, (0,external_wp_i18n_namespaceObject.__)('Resolution')), (0,external_wp_element_namespaceObject.createElement)(external_wp_primitives_namespaceObject.View, {
     className: 'gallery-image-sizes__loading'
-  }, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.Spinner, null), (0,external_wp_i18n_namespaceObject.__)('Loading options…'))))), (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.BlockControls, {
+  }, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.Spinner, null), (0,external_wp_i18n_namespaceObject.__)('Loading options…'))))), external_wp_element_namespaceObject.Platform.isWeb && (0,external_wp_element_namespaceObject.createElement)(external_wp_element_namespaceObject.Fragment, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.BlockControls, {
     group: "block"
   }, !isContentLocked && (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.ToolbarButton, {
     onClick: () => {
@@ -19287,10 +19293,10 @@ function GalleryEdit(props) {
     multiple: true,
     mediaIds: images.filter(image => image.id).map(image => image.id),
     addToGallery: hasImageIds
-  })), external_wp_element_namespaceObject.Platform.isWeb && (0,external_wp_element_namespaceObject.createElement)(GapStyles, {
+  })), (0,external_wp_element_namespaceObject.createElement)(GapStyles, {
     blockGap: attributes.style?.spacing?.blockGap,
     clientId: clientId
-  }), (0,external_wp_element_namespaceObject.createElement)(gallery_gallery, { ...props,
+  })), (0,external_wp_element_namespaceObject.createElement)(gallery_gallery, { ...props,
     showCaption: showCaption,
     ref: external_wp_element_namespaceObject.Platform.isWeb ? captionRef : undefined,
     images: images,
@@ -24394,8 +24400,8 @@ function image_Image({
     ref: imageRef,
     className: borderProps.className,
     style: {
-      width: width && height || aspectRatio ? '100%' : 'inherit',
-      height: width && height || aspectRatio ? '100%' : 'inherit',
+      width: width && height || aspectRatio ? '100%' : undefined,
+      height: width && height || aspectRatio ? '100%' : undefined,
       objectFit: scale,
       ...borderProps.style
     }
@@ -25293,7 +25299,8 @@ const image_metadata = {
     label: "Rounded"
   }],
   editorStyle: "wp-block-image-editor",
-  style: "wp-block-image"
+  style: "wp-block-image",
+  viewScript: "file:./view-interactivity.min.js"
 };
 
 
@@ -27746,7 +27753,16 @@ function useMerge(clientId, onMerge) {
       } else if (previousBlockClientId) {
         const trailingId = getTrailingId(previousBlockClientId);
         registry.batch(() => {
-          moveBlocksToPosition(getBlockOrder(clientId), clientId, previousBlockClientId);
+          // When merging a list item with a previous trailing list
+          // item, we also need to move any nested list items. First,
+          // check if there's a listed list. If there's a nested list,
+          // append its nested list items to the trailing list.
+          const [nestedListClientId] = getBlockOrder(clientId);
+
+          if (nestedListClientId) {
+            moveBlocksToPosition(getBlockOrder(nestedListClientId), nestedListClientId, getBlockRootClientId(trailingId));
+          }
+
           mergeBlocks(trailingId, clientId);
         });
       } else {
@@ -30853,17 +30869,17 @@ const moreVertical = (0,external_wp_element_namespaceObject.createElement)(exter
 
 
 function buildMenuLabel(title, id, status) {
-  if (!title?.rendered) {
+  if (!title) {
     /* translators: %s is the index of the menu in the list of menus. */
     return (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('(no title %s)'), id);
   }
 
   if (status === 'publish') {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title?.rendered);
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title);
   }
 
   return (0,external_wp_i18n_namespaceObject.sprintf)( // translators: %1s: title of the menu; %2s: status of the menu (draft, pending, etc.).
-  (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$s)'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title?.rendered), status);
+  (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$s)'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title), status);
 }
 
 function NavigationMenuSelector({
@@ -30897,7 +30913,7 @@ function NavigationMenuSelector({
       title,
       status
     }, index) => {
-      const label = buildMenuLabel(title, index + 1, status);
+      const label = buildMenuLabel(title?.rendered, index + 1, status);
       return {
         value: id,
         label,
@@ -32878,7 +32894,7 @@ const MainContent = ({
 
   const description = navigationMenu ? (0,external_wp_i18n_namespaceObject.sprintf)(
   /* translators: %s: The name of a menu. */
-  (0,external_wp_i18n_namespaceObject.__)('Structure for navigation menu: %s'), navigationMenu?.title?.rendered || (0,external_wp_i18n_namespaceObject.__)('Untitled menu')) : (0,external_wp_i18n_namespaceObject.__)('You have not yet created any menus. Displaying a list of your Pages');
+  (0,external_wp_i18n_namespaceObject.__)('Structure for navigation menu: %s'), navigationMenu?.title || (0,external_wp_i18n_namespaceObject.__)('Untitled menu')) : (0,external_wp_i18n_namespaceObject.__)('You have not yet created any menus. Displaying a list of your Pages');
   return (0,external_wp_element_namespaceObject.createElement)("div", {
     className: "wp-block-navigation__menu-inspector-controls"
   }, !hasChildren && (0,external_wp_element_namespaceObject.createElement)("p", {
@@ -36005,6 +36021,11 @@ const nextpage_init = () => initBlock({
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 
 const PatternEdit = ({
   attributes,
@@ -36014,7 +36035,14 @@ const PatternEdit = ({
   const {
     replaceBlocks,
     __unstableMarkNextChangeAsNotPersistent
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store); // Run this effect when the component loads.
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    setBlockEditingMode
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
+  const {
+    getBlockRootClientId,
+    getBlockEditingMode
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store)); // Run this effect when the component loads.
   // This adds the Pattern's contents to the post.
   // This change won't be saved.
   // It will continue to pull from the pattern file unless changes are made to its respective template part.
@@ -36027,16 +36055,27 @@ const PatternEdit = ({
       // because nested pattern blocks cannot be inserted if the parent block supports
       // inner blocks but doesn't have blockSettings in the state.
       window.queueMicrotask(() => {
-        // Clone blocks from the pattern before insertion to ensure they receive
+        const rootClientId = getBlockRootClientId(clientId); // Clone blocks from the pattern before insertion to ensure they receive
         // distinct client ids. See https://github.com/WordPress/gutenberg/issues/50628.
+
         const clonedBlocks = selectedPattern.blocks.map(block => (0,external_wp_blocks_namespaceObject.cloneBlock)(block));
+        const rootEditingMode = getBlockEditingMode(rootClientId); // Temporarily set the root block to default mode to allow replacing the pattern.
+        // This could happen when the page is disabling edits of non-content blocks.
 
         __unstableMarkNextChangeAsNotPersistent();
 
-        replaceBlocks(clientId, clonedBlocks);
+        setBlockEditingMode(rootClientId, 'default');
+
+        __unstableMarkNextChangeAsNotPersistent();
+
+        replaceBlocks(clientId, clonedBlocks); // Restore the root block's original mode.
+
+        __unstableMarkNextChangeAsNotPersistent();
+
+        setBlockEditingMode(rootClientId, rootEditingMode);
       });
     }
-  }, [clientId, selectedPattern?.blocks, __unstableMarkNextChangeAsNotPersistent, replaceBlocks]);
+  }, [clientId, selectedPattern?.blocks, __unstableMarkNextChangeAsNotPersistent, replaceBlocks, getBlockEditingMode, setBlockEditingMode, getBlockRootClientId]);
   const props = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   return (0,external_wp_element_namespaceObject.createElement)("div", { ...props
   });
@@ -41959,6 +41998,10 @@ const preformatted_metadata = {
         text: true
       }
     },
+    spacing: {
+      padding: true,
+      margin: true
+    },
     typography: {
       fontSize: true,
       lineHeight: true,
@@ -47003,23 +47046,6 @@ const symbol = (0,external_wp_element_namespaceObject.createElement)(external_wp
 }));
 /* harmony default export */ const library_symbol = (symbol);
 
-;// CONCATENATED MODULE: external ["wp","reusableBlocks"]
-const external_wp_reusableBlocks_namespaceObject = window["wp"]["reusableBlocks"];
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/ungroup.js
-
-
-/**
- * WordPress dependencies
- */
-
-const ungroup = (0,external_wp_element_namespaceObject.createElement)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,external_wp_element_namespaceObject.createElement)(external_wp_primitives_namespaceObject.Path, {
-  d: "M18 4h-7c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 9c0 .3-.2.5-.5.5h-7c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h7c.3 0 .5.2.5.5v7zm-5 5c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h1V9H6c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2v-1h-1.5v1z"
-}));
-/* harmony default export */ const library_ungroup = (ungroup);
-
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/block/edit.js
 
 
@@ -47030,14 +47056,10 @@ const ungroup = (0,external_wp_element_namespaceObject.createElement)(external_w
 
 
 
-
-
-
 function ReusableBlockEdit({
   attributes: {
     ref
-  },
-  clientId
+  }
 }) {
   const hasAlreadyRendered = (0,external_wp_blockEditor_namespaceObject.__experimentalUseHasRecursion)(ref);
   const {
@@ -47045,22 +47067,6 @@ function ReusableBlockEdit({
     hasResolved
   } = (0,external_wp_coreData_namespaceObject.useEntityRecord)('postType', 'wp_block', ref);
   const isMissing = hasResolved && !record;
-  const {
-    canRemove,
-    innerBlockCount
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      canRemoveBlock,
-      getBlockCount
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    return {
-      canRemove: canRemoveBlock(clientId),
-      innerBlockCount: getBlockCount(clientId)
-    };
-  }, [clientId]);
-  const {
-    __experimentalConvertBlockToStatic: convertBlockToStatic
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_reusableBlocks_namespaceObject.store);
   const [blocks, onInput, onChange] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', 'wp_block', {
     id: ref
   });
@@ -47092,12 +47098,7 @@ function ReusableBlockEdit({
 
   return (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.__experimentalRecursionProvider, {
     uniqueId: ref
-  }, canRemove && (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.BlockControls, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.ToolbarGroup, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.ToolbarButton, {
-    onClick: () => convertBlockToStatic(clientId),
-    label: innerBlockCount > 1 ? (0,external_wp_i18n_namespaceObject.__)('Detach patterns') : (0,external_wp_i18n_namespaceObject.__)('Detach pattern'),
-    icon: library_ungroup,
-    showTooltip: true
-  }))), (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.InspectorControls, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.PanelBody, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.TextControl, {
+  }, (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.InspectorControls, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.PanelBody, null, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.TextControl, {
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Name'),
     value: title,
@@ -50538,6 +50539,22 @@ const TelegramIcon = () => (0,external_wp_element_namespaceObject.createElement)
   d: "M28.9700376,63.3244248 C47.6273373,55.1957357 60.0684594,49.8368063 66.2934036,47.2476366 C84.0668845,39.855031 87.7600616,38.5708563 90.1672227,38.528 C90.6966555,38.5191258 91.8804274,38.6503351 92.6472251,39.2725385 C93.294694,39.7979149 93.4728387,40.5076237 93.5580865,41.0057381 C93.6433345,41.5038525 93.7494885,42.63857 93.6651041,43.5252052 C92.7019529,53.6451182 88.5344133,78.2034783 86.4142057,89.5379542 C85.5170662,94.3339958 83.750571,95.9420841 82.0403991,96.0994568 C78.3237996,96.4414641 75.5015827,93.6432685 71.9018743,91.2836143 C66.2690414,87.5912212 63.0868492,85.2926952 57.6192095,81.6896017 C51.3004058,77.5256038 55.3966232,75.2369981 58.9976911,71.4967761 C59.9401076,70.5179421 76.3155302,55.6232293 76.6324771,54.2720454 C76.6721165,54.1030573 76.7089039,53.4731496 76.3346867,53.1405352 C75.9604695,52.8079208 75.4081573,52.921662 75.0095933,53.0121213 C74.444641,53.1403447 65.4461175,59.0880351 48.0140228,70.8551922 C45.4598218,72.6091037 43.1463059,73.4636682 41.0734751,73.4188859 C38.7883453,73.3695169 34.3926725,72.1268388 31.1249416,71.0646282 C27.1169366,69.7617838 23.931454,69.0729605 24.208838,66.8603276 C24.3533167,65.7078514 25.9403832,64.5292172 28.9700376,63.3244248 Z"
 }));
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/social-link/icons/threads.js
+
+
+/**
+ * WordPress dependencies
+ */
+
+const ThreadsIcon = () => (0,external_wp_element_namespaceObject.createElement)(external_wp_primitives_namespaceObject.SVG, {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  version: "1.1"
+}, (0,external_wp_element_namespaceObject.createElement)(external_wp_primitives_namespaceObject.Path, {
+  d: "M16.3 11.3c-.1 0-.2-.1-.2-.1-.1-2.6-1.5-4-3.9-4-1.4 0-2.6.6-3.3 1.7l1.3.9c.5-.8 1.4-1 2-1 .8 0 1.4.2 1.7.7.3.3.5.8.5 1.3-.7-.1-1.4-.2-2.2-.1-2.2.1-3.7 1.4-3.6 3.2 0 .9.5 1.7 1.3 2.2.7.4 1.5.6 2.4.6 1.2-.1 2.1-.5 2.7-1.3.5-.6.8-1.4.9-2.4.6.3 1 .8 1.2 1.3.4.9.4 2.4-.8 3.6-1.1 1.1-2.3 1.5-4.3 1.5-2.1 0-3.8-.7-4.8-2S5.7 14.3 5.7 12c0-2.3.5-4.1 1.5-5.4 1.1-1.3 2.7-2 4.8-2 2.2 0 3.8.7 4.9 2 .5.7.9 1.5 1.2 2.5l1.5-.4c-.3-1.2-.8-2.2-1.5-3.1-1.3-1.7-3.3-2.6-6-2.6-2.6 0-4.7.9-6 2.6C4.9 7.2 4.3 9.3 4.3 12s.6 4.8 1.9 6.4c1.4 1.7 3.4 2.6 6 2.6 2.3 0 4-.6 5.3-2 1.8-1.8 1.7-4 1.1-5.4-.4-.9-1.2-1.7-2.3-2.3zm-4 3.8c-1 .1-2-.4-2-1.3 0-.7.5-1.5 2.1-1.6h.5c.6 0 1.1.1 1.6.2-.2 2.3-1.3 2.7-2.2 2.7z"
+}));
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/social-link/icons/tiktok.js
 
 
@@ -50927,6 +50944,13 @@ const social_link_variations_variations = [{
   },
   title: 'Telegram',
   icon: TelegramIcon
+}, {
+  name: 'threads',
+  attributes: {
+    service: 'threads'
+  },
+  title: 'Threads',
+  icon: ThreadsIcon
 }, {
   name: 'tiktok',
   attributes: {
@@ -56092,7 +56116,7 @@ function TemplatePartImportControls({
     type: "submit",
     isBusy: isBusy,
     "aria-disabled": isBusy || !selectedSidebar
-  }, (0,external_wp_i18n_namespaceObject.__)('Import')))));
+  }, (0,external_wp_i18n_namespaceObject._x)('Import', 'button label')))));
 }
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/template-part/edit/advanced-controls.js
@@ -58386,6 +58410,17 @@ function FootnotesEdit({
   const footnotes = meta?.footnotes ? JSON.parse(meta.footnotes) : [];
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
 
+  if (postType !== 'post' && postType !== 'page') {
+    return (0,external_wp_element_namespaceObject.createElement)("div", { ...blockProps
+    }, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.Placeholder, {
+      icon: (0,external_wp_element_namespaceObject.createElement)(external_wp_blockEditor_namespaceObject.BlockIcon, {
+        icon: format_list_numbered
+      }),
+      label: (0,external_wp_i18n_namespaceObject.__)('Footnotes') // To do: add instructions. We can't add new string in RC.
+
+    }));
+  }
+
   if (!footnotes.length) {
     return (0,external_wp_element_namespaceObject.createElement)("div", { ...blockProps
     }, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.Placeholder, {
@@ -58545,13 +58580,62 @@ const {
   textdomain: "default",
   usesContext: ["postId", "postType"],
   supports: {
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: false,
+        color: false,
+        width: false,
+        style: false
+      }
+    },
+    color: {
+      background: true,
+      link: true,
+      text: true,
+      __experimentalDefaultControls: {
+        link: true,
+        text: true
+      }
+    },
     html: false,
     multiple: false,
-    reusable: false
+    reusable: false,
+    spacing: {
+      margin: true,
+      padding: true,
+      __experimentalDefaultControls: {
+        margin: false,
+        padding: false
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalTextDecoration: true,
+      __experimentalFontStyle: true,
+      __experimentalFontWeight: true,
+      __experimentalLetterSpacing: true,
+      __experimentalTextTransform: true,
+      __experimentalWritingMode: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    }
   },
   style: "wp-block-footnotes"
 };
+
+const {
+  usesContextKey
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const formatName = 'core/footnote';
+const POST_CONTENT_BLOCK_NAME = 'core/post-content';
+const SYNCED_PATTERN_BLOCK_NAME = 'core/block';
 const format = {
   title: (0,external_wp_i18n_namespaceObject.__)('Footnote'),
   tagName: 'sup',
@@ -58560,22 +58644,56 @@ const format = {
     'data-fn': 'data-fn'
   },
   contentEditable: false,
+  [usesContextKey]: ['postType'],
   edit: function Edit({
     value,
     onChange,
-    isObjectActive
+    isObjectActive,
+    context: {
+      postType
+    }
   }) {
     const registry = (0,external_wp_data_namespaceObject.useRegistry)();
     const {
       getSelectedBlockClientId,
+      getBlocks,
       getBlockRootClientId,
       getBlockName,
-      getBlocks
+      getBlockParentsByBlockName
     } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+    const footnotesBlockType = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blocks_namespaceObject.store).getBlockType(format_name));
+    /*
+     * This useSelect exists because we need to use its return value
+     * outside the event callback.
+     */
+
+    const isBlockWithinPattern = (0,external_wp_data_namespaceObject.useSelect)(select => {
+      const {
+        getBlockParentsByBlockName: _getBlockParentsByBlockName,
+        getSelectedBlockClientId: _getSelectedBlockClientId
+      } = select(external_wp_blockEditor_namespaceObject.store);
+
+      const parentCoreBlocks = _getBlockParentsByBlockName(_getSelectedBlockClientId(), SYNCED_PATTERN_BLOCK_NAME);
+
+      return parentCoreBlocks && parentCoreBlocks.length > 0;
+    }, []);
     const {
       selectionChange,
       insertBlock
     } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+
+    if (!footnotesBlockType) {
+      return null;
+    }
+
+    if (postType !== 'post' && postType !== 'page') {
+      return null;
+    } // Checks if the selected block lives within a pattern.
+
+
+    if (isBlockWithinPattern) {
+      return null;
+    }
 
     function onClick() {
       registry.batch(() => {
@@ -58595,12 +58713,22 @@ const format = {
           }, value.end, value.end);
           newValue.start = newValue.end - 1;
           onChange(newValue);
-        } // BFS search to find the first footnote block.
+        }
 
+        const selectedClientId = getSelectedBlockClientId();
+        /*
+         * Attempts to find a common parent post content block.
+         * This allows for locating blocks within a page edited in the site editor.
+         */
+
+        const parentPostContent = getBlockParentsByBlockName(selectedClientId, POST_CONTENT_BLOCK_NAME); // When called with a post content block, getBlocks will return
+        // the block with controlled inner blocks included.
+
+        const blocks = parentPostContent.length ? getBlocks(parentPostContent[0]) : getBlocks(); // BFS search to find the first footnote block.
 
         let fnBlock = null;
         {
-          const queue = [...getBlocks()];
+          const queue = [...blocks];
 
           while (queue.length) {
             const block = queue.shift();
@@ -58617,10 +58745,9 @@ const format = {
         // insert it at the bottom.
 
         if (!fnBlock) {
-          const clientId = getSelectedBlockClientId();
-          let rootClientId = getBlockRootClientId(clientId);
+          let rootClientId = getBlockRootClientId(selectedClientId);
 
-          while (rootClientId && getBlockName(rootClientId) !== 'core/post-content') {
+          while (rootClientId && getBlockName(rootClientId) !== POST_CONTENT_BLOCK_NAME) {
             rootClientId = getBlockRootClientId(rootClientId);
           }
 
@@ -58664,9 +58791,52 @@ const footnotes_metadata = {
   textdomain: "default",
   usesContext: ["postId", "postType"],
   supports: {
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: false,
+        color: false,
+        width: false,
+        style: false
+      }
+    },
+    color: {
+      background: true,
+      link: true,
+      text: true,
+      __experimentalDefaultControls: {
+        link: true,
+        text: true
+      }
+    },
     html: false,
     multiple: false,
-    reusable: false
+    reusable: false,
+    spacing: {
+      margin: true,
+      padding: true,
+      __experimentalDefaultControls: {
+        margin: false,
+        padding: false
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalTextDecoration: true,
+      __experimentalFontStyle: true,
+      __experimentalFontWeight: true,
+      __experimentalLetterSpacing: true,
+      __experimentalTextTransform: true,
+      __experimentalWritingMode: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    }
   },
   style: "wp-block-footnotes"
 };
@@ -58678,8 +58848,7 @@ const {
 const footnotes_settings = {
   icon: format_list_numbered,
   edit: FootnotesEdit
-}; // Would be good to remove the format and HoR if the block is unregistered.
-
+};
 (0,external_wp_richText_namespaceObject.registerFormatType)(formatName, format);
 const footnotes_init = () => {
   initBlock({
@@ -58864,7 +59033,9 @@ const registerCoreBlocks = (blocks = __experimentalGetCoreBlocks()) => {
   }) => init());
   (0,external_wp_blocks_namespaceObject.setDefaultBlockName)(paragraph_name);
 
-  if (window.wp && window.wp.oldEditor) {
+  if (window.wp && window.wp.oldEditor && blocks.some(({
+    name
+  }) => name === freeform_name)) {
     (0,external_wp_blocks_namespaceObject.setFreeformContentHandlerName)(freeform_name);
   }
 

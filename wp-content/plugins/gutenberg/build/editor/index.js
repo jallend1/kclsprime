@@ -1579,8 +1579,6 @@ __webpack_require__.d(actions_namespaceObject, {
 
 ;// CONCATENATED MODULE: external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
-;// CONCATENATED MODULE: external ["wp","blocks"]
-const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// CONCATENATED MODULE: external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
 ;// CONCATENATED MODULE: external ["wp","coreData"]
@@ -2219,6 +2217,8 @@ function isShallowEqual(a, b, fromIndex) {
 	return /** @type {S & EnhancedSelector} */ (callSelector);
 }
 
+;// CONCATENATED MODULE: external ["wp","blocks"]
+const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// CONCATENATED MODULE: external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
 ;// CONCATENATED MODULE: external ["wp","url"]
@@ -2889,10 +2889,10 @@ const isEditedPostAutosaveable = (0,external_wp_data_namespaceObject.createRegis
 
   if (hasChangedContent(state)) {
     return true;
-  } // If the title or excerpt has changed, the post is autosaveable.
+  } // If title, excerpt, or meta have changed, the post is autosaveable.
 
 
-  return ['title', 'excerpt'].some(field => getPostRawValue(autosave[field]) !== getEditedPostAttribute(state, field));
+  return ['title', 'excerpt', 'meta'].some(field => getPostRawValue(autosave[field]) !== getEditedPostAttribute(state, field));
 });
 /**
  * Return true if the post being edited is being scheduled. Preferring the
@@ -4284,7 +4284,7 @@ const autosave = ({
 };
 const __unstableSaveForPreview = ({
   forceIsAutosaveable
-}) => async ({
+} = {}) => async ({
   select,
   dispatch
 }) => {
@@ -4757,7 +4757,6 @@ const store_store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -4841,28 +4840,7 @@ function shimAttributeSource(settings) {
   return settings;
 }
 
-(0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/editor/custom-sources-backwards-compatibility/shim-attribute-source', shimAttributeSource); // The above filter will only capture blocks registered after the filter was
-// added. There may already be blocks registered by this point, and those must
-// be updated to apply the shim.
-//
-// The following implementation achieves this, albeit with a couple caveats:
-// - Only blocks registered on the global store will be modified.
-// - The block settings are directly mutated, since there is currently no
-//   mechanism to update an existing block registration. This is the reason for
-//   `getBlockType` separate from `getBlockTypes`, since the latter returns a
-//   _copy_ of the block registration (i.e. the mutation would not affect the
-//   actual registered block settings).
-//
-// `getBlockTypes` or `getBlockType` implementation could change in the future
-// in regards to creating settings clones, but the corresponding end-to-end
-// tests for meta blocks should cover against any potential regressions.
-//
-// In the future, we could support updating block settings, at which point this
-// implementation could use that mechanism instead.
-
-(0,external_wp_data_namespaceObject.select)(external_wp_blocks_namespaceObject.store).getBlockTypes().map(({
-  name
-}) => (0,external_wp_data_namespaceObject.select)(external_wp_blocks_namespaceObject.store).getBlockType(name)).forEach(shimAttributeSource);
+(0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/editor/custom-sources-backwards-compatibility/shim-attribute-source', shimAttributeSource);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/autocompleters/user.js
 
@@ -6315,7 +6293,6 @@ function PageAttributesCheck({
  * type supports one of the given `supportKeys` prop.
  *
  * @param {Object}            props             Props.
- * @param {string}            [props.postType]  Current post type.
  * @param {WPElement}         props.children    Children to be rendered if post
  *                                              type supports.
  * @param {(string|string[])} props.supportKeys String or string array of keys
@@ -6325,10 +6302,18 @@ function PageAttributesCheck({
  */
 
 function PostTypeSupportCheck({
-  postType,
   children,
   supportKeys
 }) {
+  const postType = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEditedPostAttribute
+    } = select(store_store);
+    const {
+      getPostType
+    } = select(external_wp_coreData_namespaceObject.store);
+    return getPostType(getEditedPostAttribute('type'));
+  }, []);
   let isSupported = true;
 
   if (postType) {
@@ -6341,17 +6326,7 @@ function PostTypeSupportCheck({
 
   return children;
 }
-/* harmony default export */ const post_type_support_check = ((0,external_wp_data_namespaceObject.withSelect)(select => {
-  const {
-    getEditedPostAttribute
-  } = select(store_store);
-  const {
-    getPostType
-  } = select(external_wp_coreData_namespaceObject.store);
-  return {
-    postType: getPostType(getEditedPostAttribute('type'))
-  };
-})(PostTypeSupportCheck));
+/* harmony default export */ const post_type_support_check = (PostTypeSupportCheck);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/page-attributes/order.js
 
@@ -7006,18 +6981,23 @@ function PostAuthorCheck({
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
 
-function PostComments({
-  commentStatus = 'open',
-  ...props
-}) {
-  const onToggleComments = () => props.editPost({
+function PostComments() {
+  const commentStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEditedPost;
+
+    return (_select$getEditedPost = select(store_store).getEditedPostAttribute('comment_status')) !== null && _select$getEditedPost !== void 0 ? _select$getEditedPost : 'open';
+  }, []);
+  const {
+    editPost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+
+  const onToggleComments = () => editPost({
     comment_status: commentStatus === 'open' ? 'closed' : 'open'
   });
 
@@ -7029,13 +7009,7 @@ function PostComments({
   });
 }
 
-/* harmony default export */ const post_comments = ((0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)(select => {
-  return {
-    commentStatus: select(store_store).getEditedPostAttribute('comment_status')
-  };
-}), (0,external_wp_data_namespaceObject.withDispatch)(dispatch => ({
-  editPost: dispatch(store_store).editPost
-}))])(PostComments));
+/* harmony default export */ const post_comments = (PostComments);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-excerpt/index.js
 
@@ -7046,42 +7020,33 @@ function PostComments({
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
 
-function PostExcerpt({
-  excerpt,
-  onUpdateExcerpt
-}) {
+function PostExcerpt() {
+  const excerpt = (0,external_wp_data_namespaceObject.useSelect)(select => select(store_store).getEditedPostAttribute('excerpt'), []);
+  const {
+    editPost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   return (0,external_wp_element_namespaceObject.createElement)("div", {
     className: "editor-post-excerpt"
   }, (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.TextareaControl, {
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Write an excerpt (optional)'),
     className: "editor-post-excerpt__textarea",
-    onChange: value => onUpdateExcerpt(value),
+    onChange: value => editPost({
+      excerpt: value
+    }),
     value: excerpt
   }), (0,external_wp_element_namespaceObject.createElement)(external_wp_components_namespaceObject.ExternalLink, {
     href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt')
   }, (0,external_wp_i18n_namespaceObject.__)('Learn more about manual excerpts')));
 }
 
-/* harmony default export */ const post_excerpt = ((0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)(select => {
-  return {
-    excerpt: select(store_store).getEditedPostAttribute('excerpt')
-  };
-}), (0,external_wp_data_namespaceObject.withDispatch)(dispatch => ({
-  onUpdateExcerpt(excerpt) {
-    dispatch(store_store).editPost({
-      excerpt
-    });
-  }
-
-}))])(PostExcerpt));
+/* harmony default export */ const post_excerpt = (PostExcerpt);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-excerpt/check.js
 
@@ -7940,18 +7905,23 @@ function PostPendingStatus({
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
 
-function PostPingbacks({
-  pingStatus = 'open',
-  ...props
-}) {
-  const onTogglePingback = () => props.editPost({
+function PostPingbacks() {
+  const pingStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEditedPost;
+
+    return (_select$getEditedPost = select(store_store).getEditedPostAttribute('ping_status')) !== null && _select$getEditedPost !== void 0 ? _select$getEditedPost : 'open';
+  }, []);
+  const {
+    editPost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+
+  const onTogglePingback = () => editPost({
     ping_status: pingStatus === 'open' ? 'closed' : 'open'
   });
 
@@ -7963,13 +7933,7 @@ function PostPingbacks({
   });
 }
 
-/* harmony default export */ const post_pingbacks = ((0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)(select => {
-  return {
-    pingStatus: select(store_store).getEditedPostAttribute('ping_status')
-  };
-}), (0,external_wp_data_namespaceObject.withDispatch)(dispatch => ({
-  editPost: dispatch(store_store).editPost
-}))])(PostPingbacks));
+/* harmony default export */ const post_pingbacks = (PostPingbacks);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-preview-button/index.js
 

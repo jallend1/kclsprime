@@ -2027,7 +2027,7 @@ const saveEntityRecord = (kind, name, record, {
           ...record
         };
         data = Object.keys(data).reduce((acc, key) => {
-          if (['title', 'excerpt', 'content'].includes(key)) {
+          if (['title', 'excerpt', 'content', 'meta'].includes(key)) {
             acc[key] = data[key];
           }
 

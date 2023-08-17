@@ -35,10 +35,12 @@
 
 <!-- wp:group {"className":"local1857-officer-card","layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
 <div class="wp-block-group local1857-officer-card"><!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center">VP / Chief Steward</h2>
+<h2 class="wp-block-heading has-text-align-center">Vice-President /</h2>
 <!-- /wp:heading -->
 
-
+<!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center"> Chief Steward</h2>
+<!-- /wp:heading -->
 
 <!-- wp:image {"url":"<?php echo esc_url( get_theme_file_uri('assets/images/icon-vp.png')); ?>","width":75,"height":75,"sizeSlug":"thumbnail","linkDestination":"none"} -->
 <figure class="wp-block-image size-thumbnail is-resized"><img src="<?php echo esc_url( get_theme_file_uri('assets/images/icon-vp.png')); ?>" alt="" width="75" height="75"/></figure>

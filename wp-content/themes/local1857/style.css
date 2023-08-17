@@ -12,8 +12,9 @@ Text Domain: local1857
 
 .local1857-section-content {
   margin: 1rem auto;
-  padding: 0 1rem;
-  max-width: 2000px;
+  padding: 1rem;
+  max-width: 1800px;
+  
 }
 
 .local1857-section-heading {

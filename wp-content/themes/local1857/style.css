@@ -246,14 +246,14 @@ h2.local1857-post-title {
 /* **************** */
 
 .local1857-officer-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   padding: 1rem;
+  margin: 2rem 0 !important;
   border: solid 1px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.4);
+  min-height: 250px;
+  min-width: 250px;
 }
 
 .local1857-officer-card h2{
@@ -278,7 +278,6 @@ h2.local1857-post-title {
   padding: 0;
   margin: 0;
 }
-
 
 /* ************ */
 /* *  Pages   * */
